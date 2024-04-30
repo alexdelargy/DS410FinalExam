@@ -7,8 +7,6 @@ from pyspark.ml.pipeline import Pipeline, PipelineModel
 from sparktorch import PysparkPipelineWrapper
 import torch
 import torch.nn as nn
-import torch.nn.functional
-
 
 class Net(nn.Module):
     def __init__(self):
@@ -21,9 +19,9 @@ class Net(nn.Module):
     def forward(self, x):
         x = x.view(-1, 1, 28, 28)
         x = self.conv1(x)
-        x = torch.nn.functional.relu(x)
+        x = nn.functional.relu(x)
         x = self.conv2(x)
-        x = torch.nn.functional.max_pool2d(x, 2)
+        x = nn.functional.max_pool2d(x, 2)
         x = self.dropout1(x)
         x = torch.flatten(x, 1)
         x = self.fc1(x)
